@@ -1,0 +1,38 @@
+<section class="playlists">
+    <h1 class="heading">Apple Playlists</h1>
+
+    @if (loading()) {
+        <app-spinner />
+    } @else if (error()) {
+        <app-error-message [error]="error()!" />
+    } @else {
+        <ng-container *ngTemplateOutlet="contentTpl" />
+    }
+</section>
+
+<ng-template #contentTpl>
+    <div class="search-container">
+        <mat-form-field class="search-field">
+            <mat-label>Search</mat-label>
+            <input aria-label="Search Playlist."
+                   matInput
+                   [formControl]="searchControl"
+                   [matAutocomplete]="auto" />
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                @for (name of playlistNames(); track name) {
+                    <mat-option [value]="name">{{ name }}</mat-option>
+                }
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+
+    <cdk-virtual-scroll-viewport class="viewport" appendOnly itemSize="100">
+        <app-playlist-card class="playlist-item"
+                           *cdkVirtualFor="let playlist of playlists(); trackBy: trackPlaylistById"
+                           [playlist]="playlist" />
+
+        @if (playlists().length === 0) {
+            <p>No playlist found</p>
+        }
+    </cdk-virtual-scroll-viewport>
+</ng-template>

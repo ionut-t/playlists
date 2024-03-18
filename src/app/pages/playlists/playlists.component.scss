@@ -1,0 +1,41 @@
+@use "mixins" as mixins;
+
+:host {
+    display: flex;
+    padding: 2rem;
+    min-height: 100%;
+
+    @media only screen and (max-width: 600px) {
+        padding: 1rem;
+    }
+
+    .playlists {
+        width: 100%;
+        max-width: clamp(300px, 80%, 1000px);
+        position: relative;
+        border-radius: 4px;
+        margin: 0 auto;
+
+        @media only screen and (max-width: 600px) {
+            max-width: unset;
+        }
+
+        .search-container {
+            .search-field {
+                width: 100%;
+            }
+        }
+
+        .viewport {
+            @include mixins.VPHeight(180px);
+
+            .playlist-item {
+                margin: 1rem;
+            }
+        }
+
+        .error-message {
+            margin-top: 1rem;
+        }
+    }
+}

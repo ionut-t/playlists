@@ -4,6 +4,15 @@
     box-sizing: border-box;
 }
 
-p {
+p,
+figure {
     margin: 0;
+}
+
+figure {
+    margin-block: 0;
+}
+
+img {
+    display: block;
 }
